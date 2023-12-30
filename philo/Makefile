@@ -1,5 +1,8 @@
 FILES			= 	main.c \
-					print_state.c
+					print_state.c \
+					utils.c \
+					atoi.c \
+					is_valid_int.c 
 							
 SRC_DIR			= 	src
 OBJ_DIR			= 	obj
@@ -19,6 +22,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	@$(CC) $(OBJ) -o $(NAME)
+	@echo "$(CC) $(notdir $(OBJ)) -o $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CC_DEBUG) $(INCLUDES) $(ERROR_FLAGS) -c $< -o $@ -g
@@ -37,6 +41,6 @@ fclean: clean
 re: clean all
 
 valgrind: all
-	valgrind --leak-check=full ./$(NAME) 3456 34 2 1                                           
+	valgrind --leak-check=full ./$(NAME)                                          
 
 .PHONY: all clean fclean re
