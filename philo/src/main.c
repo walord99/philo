@@ -6,7 +6,7 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 00:58:03 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/03 00:29:58 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/01/03 12:41:29 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ pthread_mutex_t	*init_forks(int philo_count)
 	pthread_mutex_t	*forks;
 	int				i;
 
-	forks = ft_calloc(sizeof(pthread_mutex_t), philo_count * 2 + 1);
+	forks = ft_calloc(sizeof(pthread_mutex_t), philo_count);
 	if (!forks)
 		return (NULL);
 	i = 0;
-	while (i != philo_count * 2)
+	while (i != philo_count)
 	{
 		if (pthread_mutex_init(&forks[i], NULL))
 		{
@@ -70,7 +70,7 @@ int	init_threads_struct(struct s_thread **threads, pthread_mutex_t *forks,
 	while (i < info->philo_count)
 	{
 		(*threads)[i].left_fork = forks + i;
-		(*threads)[i].right_fork = forks + i + 1;
+		(*threads)[i].right_fork = forks + ((i + 1) % info->philo_count);
 		(*threads)[i].pos = i + 1;
 		(*threads)[i].info = info;
 		(*threads)[i].last_time_eat = info->start_time;
@@ -101,6 +101,19 @@ int	monitor(struct s_philo_info *info, struct s_thread *threads)
 	}
 }
 
+void	create_threads(struct s_thread *threads, struct s_philo_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->philo_count)
+	{
+		pthread_create(&((threads + i)->thread), NULL, &philo_thread, threads
+			+ i);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	pthread_mutex_t		*forks;
@@ -112,7 +125,7 @@ int	main(int argc, char **argv)
 	forks = init_forks(philo.philo_count);
 	philo.start_time = timestamp();
 	init_threads_struct(&threads, forks, &philo);
-	pthread_create(&((threads + 0)->thread), NULL, &philo_thread, threads + 0);
+	create_threads(threads, &philo);
 	monitor(&philo, threads);
 	free(forks);
 	free(threads);
@@ -124,6 +137,7 @@ void	*philo_thread(void *arg_struct)
 	struct s_thread	*thread;
 
 	thread = (struct s_thread *)arg_struct;
+	usleep(thread->pos * 100);
 	while (thread->eat_count != thread->info->eat_count_max)
 	{
 		pthread_mutex_lock(thread->left_fork);
@@ -144,6 +158,7 @@ void	*philo_thread(void *arg_struct)
 	}
 	return (NULL);
 }
+
 void	check_then_store(int *store_place, char *str, bool *error_flag)
 {
 	if (*error_flag == false && is_valid_positive_int(str))

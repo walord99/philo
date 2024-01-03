@@ -6,7 +6,7 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 01:12:40 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/02 23:54:26 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/01/03 12:41:41 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long long	timestamp(void)
 
 void	print_state(int philo_num, char *message, long long start_time)
 {
-	long long new_time;
+	long long	new_time;
 
 	new_time = timestamp() - start_time;
 	printf("%lld : %i %s\n", new_time, philo_num, message);
