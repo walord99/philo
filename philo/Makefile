@@ -41,6 +41,6 @@ fclean: clean
 re: clean all
 
 valgrind: all
-	valgrind --leak-check=full ./$(NAME)                                          
+	valgrind --leak-check=full ./$(NAME) 2 200 200 200 3                          
 
 .PHONY: all clean fclean re
