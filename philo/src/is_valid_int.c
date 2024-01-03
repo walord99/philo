@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valid_positive_int.c                                     :+:      :+:    :+:   */
+/*   is_valid_int.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:12:53 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2023/12/30 15:11:52 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/01/03 03:55:48 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static bool	is_string_int(char *str, int sign);
-int	ft_isdigit(int c);
+int			ft_isdigit(int c);
 
 bool	is_valid_positive_int(char *str)
 {

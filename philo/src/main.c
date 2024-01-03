@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 00:58:03 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/03 03:37:58 by bplante          ###   ########.fr       */
+/*   Updated: 2024/01/03 03:56:13 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,15 @@ int	init_threads_struct(struct s_thread **threads, pthread_mutex_t *forks,
 	}
 }
 
-void create_threads(struct s_thread *threads, struct s_philo_info *info)
+void	create_threads(struct s_thread *threads, struct s_philo_info *info)
 {
-	int i = 0;
-	while(i < info->philo_count)
+	int	i;
+
+	i = 0;
+	while (i < info->philo_count)
 	{
-		pthread_create(&((threads + i)->thread), NULL, &philo_thread, threads + i);
+		pthread_create(&((threads + i)->thread), NULL, &philo_thread, threads
+			+ i);
 		i++;
 	}
 }
@@ -126,6 +129,7 @@ void	*philo_thread(void *arg_struct)
 	}
 	return (NULL);
 }
+
 void	check_then_store(int *store_place, char *str, bool *error_flag)
 {
 	if (*error_flag == false && is_valid_positive_int(str))

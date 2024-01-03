@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 01:12:40 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2023/12/23 02:00:49 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/01/03 03:54:54 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long long	timestamp(void)
 
 void	print_state(int philo_num, char *message, long long start_time)
 {
-	long long new_time;
+	long long	new_time;
 
 	new_time = timestamp() - start_time;
 	printf("%lld : %i %s\n", new_time, philo_num, message);
