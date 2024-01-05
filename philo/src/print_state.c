@@ -25,5 +25,5 @@ void	print_state(int philo_num, char *message, long long start_time)
 	long long	new_time;
 
 	new_time = timestamp() - start_time;
-	printf("%lld : %i %s\n", new_time, philo_num, message);
+	printf("%d %i %s\n", new_time, philo_num, message);
 }

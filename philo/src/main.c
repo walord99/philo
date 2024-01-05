@@ -27,10 +27,9 @@ struct					s_thread
 	pthread_t			thread;
 	int					pos;
 	long long			last_time_eat;
-	pthread_mutex_t		eat_time_lock;
+	pthread_mutex_t		eat_lock;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
-	pthread_mutex_t		eat_count_lock;
 	int					eat_count;
 	struct s_philo_info	*info;
 };
@@ -60,6 +59,15 @@ pthread_mutex_t	*init_forks(int philo_count)
 	return (forks);
 }
 
+void	swap_fork(struct s_thread *thread)
+{
+	pthread_mutex_t	*temp;
+
+	temp = thread->left_fork;
+	thread->left_fork = thread->right_fork;
+	thread->right_fork = temp;
+}
+
 int	init_threads_struct(struct s_thread **threads, pthread_mutex_t *forks,
 		struct s_philo_info *info)
 {
@@ -74,7 +82,7 @@ int	init_threads_struct(struct s_thread **threads, pthread_mutex_t *forks,
 		(*threads)[i].pos = i + 1;
 		(*threads)[i].info = info;
 		(*threads)[i].last_time_eat = info->start_time;
-		pthread_mutex_init(&(*threads)[i].eat_time_lock, NULL);
+		pthread_mutex_init(&(*threads)[i].eat_lock, NULL);
 		i++;
 	}
 }
@@ -102,19 +110,17 @@ int	monitor(struct s_philo_info *info, struct s_thread *threads)
 		while (i < info->philo_count)
 		{
 			current_time = timestamp();
-			pthread_mutex_lock(&(threads + i)->eat_time_lock);
+			pthread_mutex_lock(&(threads + i)->eat_lock);
 			if (current_time - (threads + i)->last_time_eat > info->time_die_ms)
 			{
-				pthread_mutex_lock(&(threads + i)->eat_count_lock);
 				if ((threads + i)->eat_count != info->eat_count_max)
 				{
 					print_state(i + 1, "has died", info->start_time);
 				}
-				pthread_mutex_unlock(&(threads + i)->eat_count_lock);
 				detach_all(threads, info);
 				return (0);
 			}
-			pthread_mutex_unlock(&(threads + i)->eat_time_lock);
+			pthread_mutex_unlock(&(threads + i)->eat_lock);
 		}
 	}
 }
@@ -126,6 +132,7 @@ void	create_threads(struct s_thread *threads, struct s_philo_info *info)
 	i = 0;
 	while (i < info->philo_count)
 	{
+		usleep(50);
 		pthread_create(&((threads + i)->thread), NULL, &philo_thread, threads
 			+ i);
 		i++;
@@ -155,19 +162,16 @@ void	*philo_thread(void *arg_struct)
 	struct s_thread	*thread;
 
 	thread = (struct s_thread *)arg_struct;
-	usleep(thread->pos * 500);
 	while (thread->eat_count != thread->info->eat_count_max)
 	{
 		pthread_mutex_lock(thread->left_fork);
 		print_state(thread->pos, "has taken a fork", thread->info->start_time);
 		pthread_mutex_lock(thread->right_fork);
 		print_state(thread->pos, "has taken a fork", thread->info->start_time);
-		pthread_mutex_lock(&thread->eat_time_lock);
-		thread->last_time_eat = timestamp();
-		pthread_mutex_unlock(&thread->eat_time_lock);
-		pthread_mutex_lock(&thread->eat_count_lock);
+		pthread_mutex_lock(&thread->eat_lock);
 		thread->eat_count++;
-		pthread_mutex_unlock(&thread->eat_count_lock);
+		thread->last_time_eat = timestamp();
+		pthread_mutex_unlock(&thread->eat_lock);
 		print_state(thread->pos, "is eating", thread->info->start_time);
 		usleep(thread->info->time_eat_ms * 1000);
 		pthread_mutex_unlock(thread->right_fork);
