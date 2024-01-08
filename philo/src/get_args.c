@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valid_int.c                                     :+:      :+:    :+:   */
+/*   get_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:12:53 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/03 03:55:48 by bplante          ###   ########.fr       */
+/*   Updated: 2024/01/08 15:24:02 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,36 @@ bool	is_string_int(char *str, int sign)
 	else if (str[i] > max_int[i] + 1)
 		return (false);
 	return (true);
+}
+
+void	check_then_store(int *store_place, char *str, bool *error_flag)
+{
+	if (*error_flag == false && is_valid_positive_int(str))
+		*store_place = ft_atoi(str);
+	else
+		*error_flag = true;
+}
+
+int	get_args(int argc, char **argv, struct s_philo_info *philo)
+{
+	bool	error_flag;
+
+	if (argc != 4 && argc != 5)
+		return (1);
+	error_flag = false;
+	check_then_store(&philo->philo_count, argv[0], &error_flag);
+	check_then_store(&philo->time_die_ms, argv[1], &error_flag);
+	check_then_store(&philo->time_eat_ms, argv[2], &error_flag);
+	check_then_store(&philo->time_sleep_ms, argv[3], &error_flag);
+	if (argc == 5)
+		check_then_store(&philo->eat_count_max, argv[4], &error_flag);
+	else
+		philo->eat_count_max = -1;
+	if (error_flag)
+	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	philo->is_dead = false;
+	return (0);
 }

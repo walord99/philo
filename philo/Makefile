@@ -2,7 +2,10 @@ FILES			= 	main.c \
 					print_state.c \
 					utils.c \
 					atoi.c \
-					is_valid_int.c 
+					get_args.c \
+					monitor.c \
+					inits.c \
+					thread.c
 							
 SRC_DIR			= 	src
 OBJ_DIR			= 	obj
@@ -16,7 +19,7 @@ HEADER_DIR		= 	include
 INCLUDES		= 	-I$(HEADER_DIR)
 #CC_DEBUG 		= 	-fsanitize=address -fno-omit-frame-pointer
 #L_DEBUG		=	-lasan
-#ERROR_FLAGS 	= 	-Wall -Werror -Wextra
+ERROR_FLAGS 	= 	-Wall -Werror -Wextra
 
 all: $(NAME)
 
