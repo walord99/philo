@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 00:58:03 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/11 01:38:58 by bplante          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:36:39 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void unlock_forks(pthread_mutex_t *forks, struct s_philo_info *info)
+void	unlock_forks(pthread_mutex_t *forks, struct s_philo_info *info)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < info->philo_count)
 	{
 		pthread_mutex_unlock(forks + i);
