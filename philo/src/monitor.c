@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:21:48 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/08 15:22:38 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/01/11 01:44:52 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	monitor(struct s_philo_info *info, struct s_thread *threads)
 			{
 				if ((threads + i)->eat_count != info->eat_count_max)
 				{
-					print_state(i + 1, "has died", info->start_time);
 					info->is_dead = true;
+					print_state(i + 1, "has died", info->start_time);
 				}
 			}
 			pthread_mutex_unlock(&(threads + i)->eat_lock);

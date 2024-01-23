@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 00:58:03 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/08 15:36:33 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/01/17 13:36:39 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	unlock_forks(pthread_mutex_t *forks, struct s_philo_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->philo_count)
+	{
+		pthread_mutex_unlock(forks + i);
+		i++;
+	}
+}
 
 void	join_all(struct s_thread *threads, struct s_philo_info *info)
 {
@@ -51,6 +63,7 @@ int	main(int argc, char **argv)
 	init_threads_struct(&threads, forks, &philo);
 	create_threads(threads, &philo);
 	monitor(&philo, threads);
+	unlock_forks(forks, &philo);
 	join_all(threads, &philo);
 	free(forks);
 	free(threads);
