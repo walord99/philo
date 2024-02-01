@@ -71,7 +71,10 @@ int	get_args(int argc, char **argv, struct s_philo_info *philo)
 	bool	error_flag;
 
 	if (argc != 4 && argc != 5)
+	{
+		write(2, "Error\n", 6);
 		return (1);
+	}
 	error_flag = false;
 	check_then_store(&philo->philo_count, argv[0], &error_flag);
 	check_then_store(&philo->time_die_ms, argv[1], &error_flag);
