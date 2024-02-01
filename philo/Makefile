@@ -41,9 +41,6 @@ clean:
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
 
-re: clean all
-
-valgrind: all
-	valgrind --leak-check=full ./$(NAME) 2 200 200 200 3                          
+re: clean all                         
 
 .PHONY: all clean fclean re
