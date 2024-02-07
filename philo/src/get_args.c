@@ -6,7 +6,7 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:12:53 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/08 15:24:02 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/07 18:24:19 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int	get_args(int argc, char **argv, struct s_philo_info *philo)
 		return (1);
 	}
 	philo->is_dead = false;
+	pthread_mutex_init(&philo->is_dead_lock, NULL);
 	return (0);
 }

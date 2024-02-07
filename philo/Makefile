@@ -17,14 +17,14 @@ NAME			= 	philo
 HEADER_DIR		= 	include
 
 INCLUDES		= 	-I$(HEADER_DIR)
-#CC_DEBUG 		= 	-fsanitize=address -fno-omit-frame-pointer
-#L_DEBUG		=	-lasan
+#CC_DEBUG 		= 	-fsanitize=thread #-fno-omit-frame-pointer
+#L_DEBUG			=	-fsanitize=thread
 ERROR_FLAGS 	= 	-Wall -Werror -Wextra
 
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@$(CC) $(OBJ) -o $(NAME)
+	@$(CC) $(OBJ) $(L_DEBUG) -o $(NAME)
 	@echo "$(CC) $(notdir $(OBJ)) -o $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

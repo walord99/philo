@@ -6,7 +6,7 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 00:58:01 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/01/08 15:38:53 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/07 18:46:03 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ struct					s_philo_info
 	int					eat_count_max;
 	long long			start_time;
 	bool				is_dead;
+	pthread_mutex_t		is_dead_lock;
 };
 
 struct					s_thread
