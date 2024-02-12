@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 00:58:03 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/02/07 18:46:10 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/12 15:07:50 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	main(int argc, char **argv)
 	init_threads_struct(&threads, forks, &philo);
 	create_threads(threads, &philo);
 	monitor(&philo, threads);
+	if (philo.philo_count == 1)
+		pthread_mutex_unlock(threads->left_fork);
 	join_all(threads, &philo);
 	free(forks);
 	free(threads);
