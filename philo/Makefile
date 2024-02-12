@@ -27,7 +27,7 @@ $(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(OBJ) $(L_DEBUG) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CC_DEBUG) $(INCLUDES) $(ERROR_FLAGS) -c $< -o $@ -g
+	$(CC) $(CC_DEBUG) $(INCLUDES) -O3 $(ERROR_FLAGS) -c $< -o $@ -g
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)/cstack $(OBJ_DIR)/input_parsing $(OBJ_DIR)/sort  

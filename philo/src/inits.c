@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:25:35 by bplante/Wal       #+#    #+#             */
-/*   Updated: 2024/02/12 14:59:10 by bplante          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:30:12 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ pthread_mutex_t	*init_forks(int philo_count)
 
 	forks = ft_calloc(sizeof(pthread_mutex_t), philo_count);
 	if (!forks)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (i != philo_count)
 	{
@@ -39,6 +39,11 @@ void	init_threads_struct(struct s_thread **threads, pthread_mutex_t *forks,
 	int	i;
 
 	*threads = ft_calloc(sizeof(struct s_thread), info->philo_count);
+	if (!threads)
+	{
+		free(forks);
+		exit(1);
+	}
 	i = 0;
 	while (i < info->philo_count)
 	{
